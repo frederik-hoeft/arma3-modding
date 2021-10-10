@@ -1,4 +1,3 @@
-
 _BoolArray = [false,true];
 
 _EffectOnObjects_I = lbCurSel 2100;
@@ -34,27 +33,39 @@ BoolAmbientCough = _BoolArray select _BoolAmbientCough_I;
 BoolAmbientCrack = _BoolArray select _BoolAmbientCrack_I;
 //BoolAmbientCrack = true;
 
-if(_SnowBurstServer_I == 2) then{
+if (_SnowBurstServer_I == 2) then
+{
 	BoolSnowBurstServer = false;
 	BoolSnowBurstClient = false;
-}else{
-	if(_SnowBurstServer_I == 1) then {
+}
+else
+{
+	if (_SnowBurstServer_I == 1) then 
+	{
 		BoolSnowBurstServer = true;
 		BoolSnowBurstClient = false;
-	}else{
+	}
+	else
+	{
 		BoolSnowBurstClient = true;
 		BoolSnowBurstServer = false;
 	};
 };
 
-if(_EffectOnObjects_I == 0) then{
+if (_EffectOnObjects_I == 0) then
+{
 	BoolEffectOnObjects = false;
 	BoolHoverUnit = false;
-}else{
-	if(_EffectOnObjects_I == 1) then {
+}
+else
+{
+	if (_EffectOnObjects_I == 1) then 
+	{
 		BoolEffectOnObjects = true;
 		BoolHoverUnit = false;
-	}else{
+	}
+	else
+	{
 		BoolEffectOnObjects = true;
 		BoolHoverUnit = true;
 	};
@@ -83,6 +94,6 @@ _IntAmbientSoundDelay = [_IntAmbientSoundDelay,0] call BIS_fnc_cutDecimals;
 			BoolAmbientCrack,
 			_IntFogValue,
 			_IntOvercastValue
-		],TFSC_fnc_al_snow
-	],'BIS_fnc_spawn',true,true,false
+		], TFSC_fnc_al_snow
+	], 'BIS_fnc_spawn', true, true, false
 ] call BIS_fnc_MP;

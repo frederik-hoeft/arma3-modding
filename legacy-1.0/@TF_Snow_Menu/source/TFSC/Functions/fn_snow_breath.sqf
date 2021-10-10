@@ -5,7 +5,7 @@ private ["_footmobile","_alias_breath","_vapors","_stamina_pl","_stamina_pl_fres
 
 if (!hasInterface) exitWith {};
 
-sleep 2+random 10;
+sleep 2 + random 10;
 
 //_name_terr = worldName;
 _footmobile = _this select 0;
@@ -15,9 +15,10 @@ _alias_breath attachto [_footmobile,[0,0.17,0], "neck"];
 
 //_stamina_pl_fresh = getStamina player;
 
-if (terrain_type_vanilla) then {
-	
-	while {(alive _footmobile) && (al_snowstorm_om)} do {
+if (terrain_type_vanilla) then 
+{
+	while {(alive _footmobile) && (al_snowstorm_om)} do 
+	{
 		//_stamina_pl = getStamina player;
 		//if (_stamina_pl<_stamina_pl_fresh) then {} else {};
 		//_direction_p = direction player;	hint str _direction_p;
@@ -34,9 +35,11 @@ if (terrain_type_vanilla) then {
 		deleteVehicle _vapors;
 	};
 	deletevehicle _alias_breath;
-
-} else {
-	while {(alive _footmobile) && (al_snowstorm_om)} do {
+} 
+else 
+{
+	while {(alive _footmobile) && (al_snowstorm_om)} do 
+	{
 		//_direction_p = direction player;	hint str _direction_p;
 		//_stamina_pl = getStamina player;
 		//_obo = 3*(_stamina_pl/_stamina_pl_fresh)+0.25;

@@ -3,8 +3,9 @@
 
 if (!isServer) exitWith {};
 
-while {true} do {
-_allunits = [];
+while {true} do 
+{
+	_allunits = [];
 	{
 		if (alive _x) then
 		{
