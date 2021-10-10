@@ -15,6 +15,7 @@ _alias_breath attachto [_footmobile,[0,0.17,0], "neck"];
 
 //_stamina_pl_fresh = getStamina player;
 
+// TODO: why terrains? Also: what's the difference? looks... kinda identical :/
 if (terrain_type_vanilla) then 
 {
 	while {(alive _footmobile) && (al_snowstorm_om)} do 

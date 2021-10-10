@@ -1,3 +1,4 @@
+// TODO: this sucks on so many different levels I don't even...
 _sliderArray = [1900,1901,1902,1903,1904,1905];
 _sTextArray = [19000,19001,19002,19003,19004,19005];
 _sliderIdc = _sliderArray select sliderNr;

@@ -18,6 +18,7 @@ _mov_obj setpos [_pos_rotocol select 0,_pos_rotocol select 1,0];
 
 if ((player distance _mov_obj) > 2000) exitWith {};
 
+// TODO: so much duplicate code :sob:
 if (al_snow_indoor) then 
 {
 	if !(missionNamespace getVariable "under_cover_snow") then 
@@ -39,7 +40,7 @@ if (al_snow_indoor) then
 			{
 				_mov_obj setpos [getPos _mov_obj select 0,(getPos _mov_obj select 1)+_i,0];
 			};
-			_i=_i+_fct_dir;
+			_i = _i + _fct_dir;
 			_viteza_rotocol = 0.1;
 			sleep _viteza_rotocol;
 		};

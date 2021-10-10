@@ -5,6 +5,7 @@ if ((!isServer) or (!isNull hunt_alias)) exitWith {};
 
 //if (!isNull hunt_alias) exitWith {hint "yoyo"};
 
+// TODO: ah yes. the good old romanian variable names... 
 umbla= "Land_HelipadEmpty_F" createVehicle [0,0,0];
 
 while {true} do 

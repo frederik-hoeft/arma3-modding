@@ -3,6 +3,8 @@
 
 if (!isServer) exitWith {};
 
+// TODO: shouldn't this run on a different thread? 
+// Does it do so? 
 while {true} do 
 {
 	_allunits = [];
@@ -11,7 +13,9 @@ while {true} do
 		{
 			_allunits pushBack _x;
 		};
-	}  foreach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
+		// TODO: also I don't like this if statement inside the loop. 
+		// Can't we do function pointers in Arma?
+	} foreach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 	hunt_alias = _allunits call BIS_fnc_selectRandom;
 	publicVariable "hunt_alias";
 	sleep 60;

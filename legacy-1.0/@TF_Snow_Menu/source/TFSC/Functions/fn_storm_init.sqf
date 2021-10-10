@@ -1,3 +1,4 @@
+// TODO: uhhhhhm.... Yeah this suxx..
 _BoolArray = [false,true];
 
 _EffectOnObjects_I = lbCurSel 2100;
@@ -40,6 +41,7 @@ if (_SnowBurstServer_I == 2) then
 }
 else
 {
+	// TODO: is there really no ternary operator in sqf?
 	if (_SnowBurstServer_I == 1) then 
 	{
 		BoolSnowBurstServer = true;
@@ -47,8 +49,8 @@ else
 	}
 	else
 	{
-		BoolSnowBurstClient = true;
 		BoolSnowBurstServer = false;
+		BoolSnowBurstClient = true;
 	};
 };
 

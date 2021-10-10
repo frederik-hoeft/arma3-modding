@@ -5,11 +5,13 @@ private ["_rotocoale"];
 
 if (!hasInterface) exitWith {};
 
+// TODO: reduce code complexity by outsourcing
 waitUntil {start_effect_proces};
 if (al_snow_indoor) then 
 {
 	if (!(missionNamespace getVariable "under_cover_snow")) then 
 	{
+		// TODO: again: why terrain_type_vanilla???
 		if (terrain_type_vanilla) then 
 		{
 			_rotocoale = "#particlesource" createVehicleLocal getposatl player;

@@ -15,6 +15,7 @@ if (al_snow_indoor) then
 			getPosWorld _this vectorAdd [0, 0, 50], 
 			_this, objNull, true, 1, "GEOM", "NONE"
 		];
+		// TODO: people reported snow inside of hangars, is this working correctly?
 		if (((_house select 0) select 3) isKindOf "house") exitWith 
 		{
 			in_da_house = true;
@@ -26,6 +27,7 @@ if (al_snow_indoor) then
 			raza_snow = sizeof casa;
 			//hint str raza_snow;
 		};
+		// TODO: this variable name is sketchy af...
 		in_da_house = false;
 		missionNamespace setVariable ["under_cover_snow", false, false];
 		//player sideChat (format ["%1",in_da_house]);
@@ -38,8 +40,12 @@ if (al_snow_indoor) then
 			while {al_snowstorm_om} do 
 			{
 				player call KK_fnc_inHouse;
+				// TODO: probably would be good enough to check this only every 500 ms ...
 				sleep 0.2;
 			};
+			// TODO: what does "al_snowstorm_om" do exactly?
+			// if it's some kind of bool "snowstorm is running" don't we swan another thread either way? 
+			// like when exactly will this exact spawn command get executed?
 			waitUntil {al_snowstorm_om};
 		};
 	}
@@ -50,8 +56,9 @@ sleep 5;
 start_effect_proces = true;
 publicVariable "start_effect_proces";
 
+// TODO: I think alot of people didn't like the cam shake either...
+// at least make it optional.
 enableCamShake true;
-
 [] spawn 
 {
 	while {al_snowstorm_om} do 
@@ -73,7 +80,8 @@ while {true} do
 		effect_screen ppEffectEnable true;
 		effect_screen ppEffectAdjust [0.1,0.1,0.5,0.1,0.1,true];
 		effect_screen ppEffectCommit 0;
-
+		
+		// TODO: I dunno... this just contains so much duplicate code it just makes me wanna quit.
 		if (al_snow_indoor) then 
 		{
 			if (in_da_house) then 
@@ -81,6 +89,7 @@ while {true} do
 				if (al_local_fog_snow) then 
 				{
 					_alias_local_fog = "#particlesource" createVehicleLocal (getpos player);
+					// TODO: outsource this to it's own function...
 					if !(isNull objectParent player) then 
 					{
 						_alias_local_fog attachto [vehicle player];
@@ -107,6 +116,8 @@ while {true} do
 				_fulg_nea_1 setParticleCircle [raza_snow+3, [0, 0, 0]];
 				_fulg_nea_1 setParticleParams [["\A3\data_f\ParticleEffects\Universal\Universal.p3d", 16, 12, 8], "", "Billboard", 1, 8, [0, 0, 0], [0,0,23], 3, 21, 0.1, 0.05, [0,0,0,0.3], [[1, 1, 1, 0],[1, 1, 1, 0],[1, 1, 1, 0.5],[1, 1, 1, 1]], [0.08], 1, 0, "", "", cladire];
 				
+				// TODO: Jo wtf does this really run each frame? if so it'd be better doing active polling
+				// ... or even better, work with call backs...
 				waitUntil {!in_da_house or !al_snowstorm_om};
 
 				deletevehicle _fulg_nea_1;

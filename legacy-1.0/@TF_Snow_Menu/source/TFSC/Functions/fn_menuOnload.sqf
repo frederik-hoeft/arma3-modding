@@ -1,3 +1,4 @@
+// Obviously this sucks but I can't be bothered looking for another way to implement this ...
 _index = lbAdd [2100, "None"];
 _index = lbAdd [2100, "All but Units"];
 _index = lbAdd [2100, "All"];

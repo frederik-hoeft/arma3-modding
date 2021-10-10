@@ -86,15 +86,20 @@ sleep 0.1;
 durationHandle = [_duration_snowstorm] spawn 
 {
 	x_duration_snowstorm = _this select 0;
-	if (x_duration_snowstorm<0) then {al_snowstorm_om = true;publicVariable "al_snowstorm_om";} 
-	else {
-	sleep x_duration_snowstorm;
-	
-	al_snowstorm_om = false;
-	publicVariable "al_snowstorm_om";
-	
-	finishRotocol = false;
-	publicVariable "finishRotocol";
+	if (x_duration_snowstorm < 0) then 
+	{
+		al_snowstorm_om = true;
+		publicVariable "al_snowstorm_om";
+	} 
+	else 
+	{
+		sleep x_duration_snowstorm;
+		
+		al_snowstorm_om = false;
+		publicVariable "al_snowstorm_om";
+		
+		finishRotocol = false;
+		publicVariable "finishRotocol";
 	};
 };
 
@@ -112,28 +117,35 @@ durationHandle = [_duration_snowstorm] spawn
 };
 
 _currentOvercast = [(overcast * 100),0] call BIS_fnc_cutDecimals;
-if(_currentOvercast != _overcastValue) then 
+if (_currentOvercast != _overcastValue) then 
 {
 	84500 setOvercast _overcastValue;
 	60 setRain 0;
 	60 setLightnings 0;
 	forceweatherchange;
-	cloudhandle = [_duration_snowstorm, _overcastValue] spawn {
+	cloudhandle = [_duration_snowstorm, _overcastValue] spawn 
+	{
 		_duration_snowstorm_Used = _this select 0;
 		_overcastValueUsed 		 = _this select 1;
 		_duration_snowstorm_Used setOvercast _overcastValueUsed;
 	};
-	[] spawn {
-		while{al_snowstorm_om} do {
+
+	[] spawn 
+	{
+		// TODO: this is bad.
+		while {al_snowstorm_om} do 
+		{
 			60 setRain 0;
 			60 setLightnings 0;
 		};
+		// TODO: can we gracefully shut that down?
 		terminate cloudhandle;
 	};
 };
 
 [] spawn 
 {
+	// TODO: add randomized sleep and also this is bad code.
 	if (snow_burst_server_side) then 
 	{
 		while {al_snowstorm_om} do 
@@ -154,7 +166,8 @@ if(_currentOvercast != _overcastValue) then
 	};
 };
 
-if(ambient_sounds_cough) then 
+// TODO: can we outsource stuff like this to functions?
+if (ambient_sounds_cough) then 
 {
 	[] spawn 
 	{
@@ -165,12 +178,13 @@ if(ambient_sounds_cough) then
 			//[[hunt_alias, _tuse], "say3d", true] call BIS_fnc_MP;
 			[hunt_alias,[_tuse,100]] remoteExec ["say3d"];
 			// >> you can tweak sleep value if you want to hear playable units coughing more or less often	
-			sleep 60+ random ambient_sounds_al;//60+random 180;
+			sleep 60 + random ambient_sounds_al;//60 + random 180;
 		};	
 	};
 };
+// TODO: outsource
 // tree cracks
-if(ambient_sounds_cracks) then 
+if (ambient_sounds_cracks) then 
 {
 	[] spawn 
 	{
@@ -184,6 +198,8 @@ if(ambient_sounds_cracks) then
 			//[[treecrack, _treesu], "say3d", true] call BIS_fnc_MP;
 			[treecrack,[_treesu,100]] remoteExec ["say3d"];
 			// >> you can tweak sleep value if you want to hear trees cracking more or less often	
+
+			// TODO: what's up with these random sleeps? 31 seconds? wtf
 			sleep 31+random ambient_sounds_al;
 		};
 	};
@@ -202,8 +218,10 @@ if(ambient_sounds_cracks) then
 			finishRotocol = true;
 			publicVariable "finishRotocol";
 		
+			// TODO: why would we care which terrain we are on? 
 			if (terrain_type_vanilla) then 
 			{
+				// TODO: do we really need this many global/public variables?
 				drop_int_rot = 0.001 + random 0.01;
 				publicVariable "drop_int_rot";		
 				life_part_rot = 1+random 3;
@@ -276,7 +294,8 @@ if(ambient_sounds_cracks) then
 			{
 				finishRotocol = true;
 				publicVariable "finishRotocol";
-			
+
+				// TODO: so much duplicate code :C
 				if (terrain_type_vanilla) then 
 				{
 					drop_int_rot = 0.001 + random 0.01;
@@ -333,7 +352,7 @@ if(ambient_sounds_cracks) then
 				//publicVariable "fulg_p_drop";	
 				finishRotocol = false;
 				publicVariable "finishRotocol";
-		// >> you can tweak sleep value if you want to have gusts more or less often		
+				// >> you can tweak sleep value if you want to have gusts more or less often		
 				sleep 60+random ambient_sounds_al;
 			};
 		} 
@@ -345,19 +364,19 @@ if(ambient_sounds_cracks) then
 				publicVariable "finishRotocol";
 			
 				_fct = [1,-1] call BIS_fnc_selectRandom;
-				vitx = 5*_fct;
+				vitx = 5 * _fct;
 				publicVariable "vitx";
-				vity = 5*_fct;
+				vity = 5 * _fct;
 				publicVariable "vity";	
 					
-				sleep 60+random ambient_sounds_al;
+				sleep 60 + random ambient_sounds_al;
 				//hint "schimb";
 				//fulg_p_drop	= 0.001;
 				//publicVariable "fulg_p_drop";
 				
 				finishRotocol = false;
 				publicVariable "finishRotocol";
-				sleep 60+random ambient_sounds_al;
+				sleep 60 + random ambient_sounds_al;
 			};
 		};
 	};
@@ -368,15 +387,16 @@ if (al_fog_snow) then
 {
 	//<-- Optional: change fog density
 	60 setFog [/*fogValue _fogValue*/ 0.65,/*fogDecay*/0.01,/*fogBase*/0.5]; 
-	//	[] spawn {_ifog=0; while {_ifog <0.5} do {	_ifog=_ifog+0.001; 0 setFog _ifog; sleep 0.01;		};	};
 };
 
+// TODO: translate all these comments and variable names
 // seteaza wind storm functie de directie
 
-raport = 360/_direction_snowstorm;
+raport = 360 / _direction_snowstorm;
 raport = round (raport * (10 ^ 2)) / (10 ^ 2);
 //hint str raport;
 
+// TODO: I dunno what this does but I'm sure there's a better way to do it.
 if (raport >= 4) then 
 {
 	fctx = 1; 
@@ -429,6 +449,7 @@ incry = false;
 
 while {incr} do 
 {
+	// TODO: sleep 0.01? really? this is probably kinda bad.
 	sleep 0.01;
 	if (inx < abs vx) then 
 	{
@@ -448,7 +469,7 @@ while {incr} do
 	};
 	if (incrx and incry) then 
 	{
-		incr=false
+		incr = false // TODO: what's up with these missing semi-colons?
 	};
 	winx = floor (inx*fctx);
 	winy = floor (iny*fcty);
@@ -462,7 +483,7 @@ publicVariable "alias_drop_fog_factor";
 //[] spawn TFSC_fnc_alias_snowstorm_effect;
 [TFSC_fnc_alias_snowstorm_effect,'BIS_fnc_spawn',true,true,false] call BIS_fnc_MP;
 
-
+// All this optional stuff should be outsourced to some sort of startup script.
 if (breath_vapors_units) then 
 {
 	//{[[[_x],"AL_snowstorm\snow_breath.sqf"],"BIS_fnc_execVM",true,true] spawn BIS_fnc_MP;sleep 0.5} forEach allUnits;
@@ -470,6 +491,9 @@ if (breath_vapors_units) then
 	//{[[[_x],TFSC_fnc_snow_breath],'BIS_fnc_spawn',true,true,false] call BIS_fnc_MP;sleep 0.5} forEach allUnits;
 };
 
+// TODO: tbh "_effect_on_objects" kinda sucks and nobody likes it :/
+// this is a snow storm, not a monsoon.
+// TODO: also this code sucks.
 if (_effect_on_objects) then 
 {
 	while {al_snowstorm_om} do 
